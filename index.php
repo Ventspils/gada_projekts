@@ -52,20 +52,41 @@
     </form>
 </div>
 <script>
-    const loginBox = document.querySelector('.login');
-    const registerBox = document.querySelector('.register');
-    const showRegister = document.getElementById('showRegister');
-    const showLogin = document.getElementById('showLogin');
+// Formu pārslēgšana
+const loginBox = document.querySelector('.login');
+const registerBox = document.querySelector('.register');
+document.getElementById('showRegister').onclick = () => {
+    loginBox.style.display = 'none';
+    registerBox.style.display = 'block';
+};
+document.getElementById('showLogin').onclick = () => {
+    registerBox.style.display = 'none';
+    loginBox.style.display = 'block';
+};
 
-    showRegister.addEventListener('click', () => {
-        loginBox.style.display = 'none';
-        registerBox.style.display = 'block';
-    });
+// AJAX reģistrācija
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    showLogin.addEventListener('click', () => {
-        registerBox.style.display = 'none';
-        loginBox.style.display = 'block';
+    const formData = new FormData(this);
+
+    fetch('register_cfg.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            registerBox.style.display = 'none';
+            loginBox.style.display = 'block';
+        }
+    })
+    .catch(err => {
+        alert("Kļūda savienojumā ar serveri.");
+        console.error(err);
     });
+});
 </script>
 </body>
 </html>

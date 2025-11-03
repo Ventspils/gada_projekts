@@ -1,48 +1,39 @@
 <?php
+header('Content-Type: application/json');
 session_start();
-include('db.php'); // pieslēdzies datubāzei
+include('db.php');
 
-// Iegūstam datus no formas
-$vards = $_POST['vards'];
-$uzvards = $_POST['uzvards'];
-$email = $_POST['email'];
-$parole = $_POST['password'];
-$klase = $_POST['klase'];
+$vards = $_POST['vards'] ?? '';
+$uzvards = $_POST['uzvards'] ?? '';
+$email = $_POST['email'] ?? '';
+$parole = $_POST['password'] ?? '';
+$klase = $_POST['klase'] ?? '';
 
-// Drošības nolūkos (vienkāršā versija)
+if (empty($vards) || empty($uzvards) || empty($email) || empty($parole) || empty($klase)) {
+    echo json_encode(["success" => false, "message" => "Lūdzu aizpildi visus laukus."]);
+    exit;
+}
+
 $vards = mysqli_real_escape_string($mysqli, $vards);
 $uzvards = mysqli_real_escape_string($mysqli, $uzvards);
 $email = mysqli_real_escape_string($mysqli, $email);
 $klase = mysqli_real_escape_string($mysqli, $klase);
-
-// Šifrējam paroli
 $parole = SHA1($parole);
 
-// Pārbaudām, vai šāds lietotājs jau eksistē
-$check = $mysqli->query("SELECT * FROM vb_users WHERE username='$email'");
+// Pārbaudām, vai e-pasts jau eksistē
+$check = $mysqli->query("SELECT id_users FROM vb_users WHERE username='$email'");
 if (mysqli_num_rows($check) > 0) {
-    // Ja epasts jau eksistē
-    echo "<script>
-        alert('Šāds lietotājs jau eksistē!');
-        window.location.href='index.php';
-    </script>";
+    echo json_encode(["success" => false, "message" => "Šāds lietotājs jau eksistē."]);
     exit;
 }
 
-// Ievietojam jauno lietotāju datubāzē
-$query = "INSERT INTO vb_users (vards, uzvards, username, password, klase)
-          VALUES ('$vards', '$uzvards', '$email', '$parole', '$klase')";
+// Ievietojam lietotāju (type = 0, registration_date = automātiski)
+$query = "INSERT INTO vb_users (vards, uzvards, username, password, klase, type)
+          VALUES ('$vards', '$uzvards', '$email', '$parole', '$klase', 0)";
 
 if ($mysqli->query($query)) {
-    // Ja viss OK, atgriežam uz login formu
-    echo "<script>
-        alert('Reģistrācija veiksmīga! Tagad vari pieteikties.');
-        window.location.href='index.php';
-    </script>";
+    echo json_encode(["success" => true, "message" => "Reģistrācija veiksmīga! Tagad vari pieteikties."]);
 } else {
-    echo "<script>
-        alert('Kļūda reģistrējoties: ".$mysqli->error."');
-        window.location.href='index.php';
-    </script>";
+    echo json_encode(["success" => false, "message" => "Kļūda: " . $mysqli->error]);
 }
 ?>
