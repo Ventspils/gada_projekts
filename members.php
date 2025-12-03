@@ -1,7 +1,8 @@
 <?php
 session_start();
-if ($_SESSION["id"] <= 0){
+if (!isset($_SESSION["id"]) || $_SESSION["id"] <= 0) {
     header("Location: index.php");
+    exit;
 }
 ?>
 <!DOCTYPE html>
