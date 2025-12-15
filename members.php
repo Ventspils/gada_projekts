@@ -4,6 +4,13 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] <= 0) {
     header("Location: index.php");
     exit;
 }
+if ($_SESSION["type"] == "student") {
+    echo "Welcome, student!";
+}
+
+if ($_SESSION["type"] == "teacher") {
+    echo "Welcome, teacher!";
+}
 ?>
 <!DOCTYPE html>
 <html>
