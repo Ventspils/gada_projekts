@@ -4,13 +4,7 @@ if (!isset($_SESSION["id"]) || $_SESSION["id"] <= 0) {
     header("Location: index.php");
     exit;
 }
-if ($_SESSION["type"] == "student") {
-    echo "Welcome, student!";
-}
 
-if ($_SESSION["type"] == "teacher") {
-    echo "Welcome, teacher!";
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +18,17 @@ if ($_SESSION["type"] == "teacher") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src='main.js'></script>
 </head>
-<body>
+<body class="container mt-4">
+
+<?php
+if ($_SESSION["type"] === "student") {
+    include "student_dashboard.php";
+}
+
+if ($_SESSION["type"] === "teacher") {
+    include "teacher_dashboard.php";
+}
+?>
     
 </body>
 </html>
