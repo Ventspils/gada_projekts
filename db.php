@@ -6,4 +6,6 @@ $mysqli->query ("set character_set_client='utf8'");
 $mysqli->query ("set character_set_results='utf8'");
 $mysqli->query ("set collation_connection='utf81_general_ci'");
 $mysqli->query ("SET NAMES utf8");
+$conn = $mysqli;
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ?>
