@@ -3,13 +3,24 @@ require "db.php";
 
 $student_id = $_SESSION["id"];
 
+$month = date("n");
+
+    if ($month >= 9 && $month <= 12) {
+        $semester = "1";
+    } elseif ($month >= 1 && $month <= 5) {
+        $semester = "2";
+    } else {
+        $semester = null;
+    }
+
 $stmt = $conn->prepare("
     SELECT * FROM vb_request 
     WHERE student_id = ? 
+    AND semester = ?
     AND (status = 'pending' OR status = 'approved')
 ");
 
-$stmt->bind_param("i", $student_id);
+$stmt->bind_param("is", $student_id, $semester);
 $stmt->execute();
 
 $result = $stmt->get_result();
@@ -79,3 +90,4 @@ $request = $result->fetch_assoc();
 
     </div>
 </div>
+

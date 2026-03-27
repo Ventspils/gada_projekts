@@ -17,16 +17,33 @@ if (!$selected_date) {
     header("Location: members.php");
     exit;
 }
+/* Nosakām semestri pēc IZVĒLĒTĀ datuma */
+$month = date("n", strtotime($selected_date));
+
+    if ($month >= 9 && $month <= 12) {
+        $semester = "1";
+    } elseif ($month >= 1 && $month <= 5) {
+        $semester = "2";
+    } else {
+        // vasara vai nederīgs datums
+        header("Location: members.php");
+        exit;
+    }
 
 /* Pārbaude - vai jau nav aktīva pieteikuma */
 
 $stmt = $conn->prepare("
     SELECT id FROM vb_request
     WHERE student_id = ?
+    AND semester = ?
     AND (status = 'pending' OR status = 'approved')
 ");
 
-$stmt->bind_param("i", $student_id);
+if (!$stmt){
+    die("Prepare failed: " . $conn->error);
+}
+
+$stmt->bind_param("is", $student_id, $semester);
 $stmt->execute();
 $stmt->store_result();
 
@@ -39,14 +56,14 @@ if ($stmt->num_rows > 0) {
 /* Ievietojam jauno pieteikumu */
 
 $stmt = $conn->prepare("
-    INSERT INTO vb_request (student_id, date, status, created_at)
-    VALUES (?, ?, 'pending', NOW())
+    INSERT INTO vb_request (student_id, date, status, created_at, semester)
+    VALUES (?, ?, 'pending', NOW(), ?)
 ");
 if (!$stmt) {
     die("Prepare failed: " . $conn->error);
 }
 
-$stmt->bind_param("is", $student_id, $selected_date);
+$stmt->bind_param("iss", $student_id, $selected_date, $semester);
 $stmt->execute();
 
 /* Atpakaļ uz dashboard */
