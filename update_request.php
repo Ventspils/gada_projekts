@@ -15,6 +15,12 @@ if (!$request_id || !$action) {
     exit;
 }
 
+if ($_POST["action"] === "delete") {
+    $stmt = $conn->prepare("DELETE FROM vb_request WHERE id = ?");
+    $stmt->bind_param("i", $request_id);
+    $stmt->execute();
+}
+
 $status = ($action === "approve") ? "approved" : "rejected";
 
 $stmt = $conn->prepare("

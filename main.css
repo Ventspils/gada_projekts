@@ -1,5 +1,8 @@
 body {
-    background-color: rgb(25, 25, 112);
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .login{
@@ -7,7 +10,7 @@ body {
     margin: 0 auto;
     margin-top: 100px;
     border-radius: 10px;
-    background-color:rgb(173, 216, 230);
+    background-color:rgb(173, 230, 200);
     padding: 50px;
 }
 .switch-text{
@@ -24,7 +27,15 @@ body {
     padding: 50px;
     display: none;
 }
-.basketbolaDati{
-    width: 1000px;
-    margin: 0 auto;
+.btn:hover {
+    opacity: 0.8;
+    box-shadow: #111827 0px 2px 4px;
+}
+.card {
+    transition: 0.2s;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.card:hover {
+    transform: scale(1.01);
 }

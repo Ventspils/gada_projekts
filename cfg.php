@@ -23,6 +23,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
     $_SESSION["id"] = $row['id'];        // teacher ID column (different name!)
     $_SESSION["type"] = "teacher";       // user type
+    $_SESSION["admin"] = $row["admin"];      
 
     header("Location: members.php");
     exit;

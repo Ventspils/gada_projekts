@@ -24,9 +24,14 @@ $type = $_SESSION["type"];
     <?php
     if ($type === "student") {
         include "student_dashboard.php";
-    } elseif ($type === "teacher") {
-        include "teacher_dashboard.php";
-    }
+    } 
+    elseif ($type === "teacher") {
+        if (isset($_SESSION["admin"]) && $_SESSION["admin"] == 3) {
+            include "admin_dashboard.php";
+        } else {
+            include "teacher_dashboard.php";
+        }
+}
     ?>
 </div>
 
