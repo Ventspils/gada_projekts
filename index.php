@@ -12,13 +12,14 @@
 </head>
 <body>
 <div class='login'>
+    <?php if (isset($_GET["error"])): ?>
+        <div class="alert alert-danger">
+            Nepareizs kods!
+        </div>
+    <?php endif; ?>
     <form action='cfg.php' method='post'>
     <div class="mb-3">
-        <input name='login' type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email address">
-    </div>
-        <br>
-    <div class="mb-3">
-        <input name='pass' type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input name='pass' type="password" class="form-control" id="exampleInputPassword1" placeholder="Personas kods">
     </div>
         <br>
     <button type="submit" class="btn btn-primary">Submit</button>

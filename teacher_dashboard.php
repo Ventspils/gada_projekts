@@ -32,10 +32,16 @@ $result = $stmt->get_result();
 ?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Skolotāja panelis</h2>
-    <a href="archive.php" class="btn btn-dark">
-        Arhīvs
-    </a>
+    <h2 class="mb-0">Skolotāja panelis</h2>
+
+    <div class="d-flex gap-2">
+        <a href="archive.php" class="btn btn-dark">
+            Arhīvs
+        </a>
+        <a href="logout.php" class="btn btn-outline-danger">
+            Iziet
+        </a>
+    </div>
 </div>
 
 <div class="card mt-3">
@@ -86,12 +92,6 @@ $result = $stmt->get_result();
                                     <input type="hidden" name="request_id" value="<?= $row["id"] ?>">
                                     <input type="hidden" name="action" value="reject">
                                     <button class="btn btn-danger btn-sm">Noraidīt</button>
-                                </form>
-
-                                <form action="update_request.php" method="post" style="display:inline;">
-                                    <input type="hidden" name="request_id" value="<?= $row["id"] ?>">
-                                    <input type="hidden" name="action" value="delete">
-                                    <button class="btn btn-secondary btn-sm">Dzēst</button>
                                 </form>
                             </td>
                         </tr>

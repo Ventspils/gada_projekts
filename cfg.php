@@ -30,7 +30,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 }
 
 // If no match at all back to login
-header("Location: index.php");
+header("Location: index.php?error=1");
 exit;
 
 ?>

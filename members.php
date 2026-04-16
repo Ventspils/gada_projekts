@@ -19,7 +19,6 @@ $type = $_SESSION["type"];
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-
 <div class="container mt-4">
     <?php
     if ($type === "student") {

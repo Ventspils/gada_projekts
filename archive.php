@@ -58,8 +58,13 @@ $result = $conn->query("
                                 <td>
                                     <?php if ($row["status"] === "approved"): ?>
                                         <span class="badge bg-success">Apstiprināts</span>
+
                                     <?php elseif ($row["status"] === "rejected"): ?>
                                         <span class="badge bg-danger">Noraidīts</span>
+
+                                    <?php elseif ($row["status"] === "cancel"): ?>
+                                        <span class="badge bg-secondary">Atcelts</span>
+
                                     <?php else: ?>
                                         <span class="badge bg-warning text-dark">Gaida</span>
                                     <?php endif; ?>

@@ -18,7 +18,15 @@ $students = $conn->query("
 ");
 ?>
 
-<h2>Admin panelis</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Admin panelis</h2>
+
+    <div class="d-flex gap-2">
+        <a href="logout.php" class="btn btn-outline-danger">
+            Iziet
+        </a>
+    </div>
+</div>
 
 <!-- IZVEIDOT REQUEST -->
 <div class="container mt-4">
@@ -80,6 +88,7 @@ $students = $conn->query("
                                         <option value="pending" <?= $row["status"] == "pending" ? "selected" : "" ?>>Gaida</option>
                                         <option value="approved" <?= $row["status"] == "approved" ? "selected" : "" ?>>Apstiprināts</option>
                                         <option value="rejected" <?= $row["status"] == "rejected" ? "selected" : "" ?>>Noraidīts</option>
+                                        <option value="cancel" <?= $row["status"] == "cancel" ? "selected" : "" ?>>Atcelts</option>
                                     </select>
 
                                     
